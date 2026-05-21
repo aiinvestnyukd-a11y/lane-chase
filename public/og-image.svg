@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF7E5F"/>
+      <stop offset="100%" stop-color="#1A1F3A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="65%" r="50%">
+      <stop offset="0%" stop-color="rgba(61,217,214,0.45)" />
+      <stop offset="100%" stop-color="rgba(61,217,214,0)" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Skyline silhouette -->
+  <g fill="#1A1A2E">
+    <rect x="0"    y="280" width="120" height="160"/>
+    <rect x="130"  y="220" width="80"  height="220"/>
+    <polygon points="240,260 260,180 290,180 310,260 310,440 240,440"/>
+    <rect x="330"  y="250" width="60"  height="190"/>
+    <rect x="410"  y="180" width="50"  height="260"/>
+    <polygon points="490,240 530,140 570,240 570,440 490,440"/>
+    <rect x="590"  y="260" width="80"  height="180"/>
+    <rect x="690"  y="200" width="60"  height="240"/>
+    <rect x="770"  y="240" width="70"  height="200"/>
+    <rect x="860"  y="180" width="40"  height="260"/>
+    <rect x="920"  y="260" width="90"  height="180"/>
+    <rect x="1030" y="220" width="60"  height="220"/>
+    <rect x="1110" y="250" width="90"  height="190"/>
+  </g>
+
+  <!-- Road bands suggesting 4 lanes (perspective) -->
+  <polygon points="380,440 820,440 980,630 220,630" fill="#11161f"/>
+  <polygon points="430,440 770,440 870,630 330,630" fill="#1f2937" />
+  <!-- Lane dashes -->
+  <g fill="#fbbf24">
+    <rect x="586" y="470" width="6" height="20"/>
+    <rect x="582" y="510" width="7" height="26"/>
+    <rect x="578" y="555" width="9" height="32"/>
+  </g>
+  <!-- Side stripes -->
+  <polygon points="430,440 437,440 332,630 318,630" fill="#f3f4f6"/>
+  <polygon points="763,440 770,440 882,630 868,630" fill="#f3f4f6"/>
+
+  <!-- NYUKD badge top-left -->
+  <g transform="translate(72, 72)">
+    <rect width="44" height="44" rx="8" fill="#11162A" stroke="#2A3358"/>
+    <g transform="translate(6, 6)">
+      <path d="M9 24 L9 8 L23 24 L23 8" stroke="#F1F2F7" stroke-width="2.5" fill="none" stroke-linecap="square"/>
+      <circle cx="23" cy="24" r="2.2" fill="#3DD9D6"/>
+    </g>
+    <text x="60" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif" font-size="20" fill="#F1F2F7" font-weight="600" letter-spacing="-0.3">NYUKD Gaming</text>
+  </g>
+
+  <text x="72" y="225" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif" font-size="128" fill="#F1F2F7" font-weight="800" letter-spacing="-4">Lane Chase</text>
+  <text x="72" y="285" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif" font-size="30" fill="#9AA0B7" font-weight="500" letter-spacing="-0.3">20 cars · 20 circuits · 4 lanes of mayhem.</text>
+
+  <text x="1128" y="600" text-anchor="end" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="14" fill="#5A6088" font-weight="500" letter-spacing="1">lanechase.nyukd.com</text>
+</svg>
