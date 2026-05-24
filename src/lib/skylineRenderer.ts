@@ -372,16 +372,12 @@ const drawLandmark = (
     }
 
     case 'colosseum': {
-      // Roman arena: arched oval with tiered openings
+      // Roman arena: arched oval with tiered window-arch hints
       const archW = lw / 6;
       const archH = lh * 0.7;
       const y = bottomY - archH;
       drawBlock(cx - lw / 2, y, lw, archH);
-      // Carve out arches (draw arch openings in sky color)
-      ctx.save();
-      ctx.fillStyle = TIME_PALETTES[(arguments as unknown as any)[0] as never]?.skyBottom ?? '#000';
-      ctx.restore();
-      // Instead just outline windows
+      // Arch hints — bright rectangles suggesting the openings.
       ctx.fillStyle = accent;
       ctx.globalAlpha = 0.3;
       for (let i = 0; i < 5; i++) {
