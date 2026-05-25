@@ -6,10 +6,11 @@ import type { GameState, PlayerCar, PowerType, PowerUp, TrafficCar } from '@/typ
 // ── Tunable constants ────────────────────────────────────────────────────
 const LANES = 4;
 const COUNTDOWN_MS = 3000;
-const BASE_PLAYER_SPEED = 12;       // units/sec at throttle=1 for a tier-1 car
+const BASE_PLAYER_SPEED = 12;       // legacy export — not used in physics
+const SPEED_MULTIPLIER = 1.7;       // global multiplier on car.topSpeed
 const BOOST_MULTIPLIER = 1.6;
 const SLOW_MULTIPLIER = 0.5;
-const TRAFFIC_BASE_SPEED = 4;       // units/sec other cars (slower than you)
+const TRAFFIC_BASE_SPEED = 6;       // units/sec other cars (slightly faster too, but still slower than the player)
 const LANE_SWITCH_RATE = 6;         // how fast laneFloat lerps toward lane
 const POWERUP_DURATION_MS = 5000;
 const COLLISION_RADIUS_Z = 1.2;     // longitudinal hit margin
@@ -179,7 +180,7 @@ export function useGameEngine() {
         const targetThrottle = throttleRef.current;
         const accelRate = car.acceleration * 8; // higher = quicker rev
         const throttle = prev.player.throttle + Math.sign(targetThrottle - prev.player.throttle) * Math.min(Math.abs(targetThrottle - prev.player.throttle), accelRate * dt);
-        const baseSpeed = car.topSpeed * throttle;
+        const baseSpeed = car.topSpeed * throttle * SPEED_MULTIPLIER;
         let speedMul = 1 * circuit.speedCap;
         if (prev.player.boostUntilMs > now) speedMul *= BOOST_MULTIPLIER;
         if (prev.player.slowUntilMs > now) speedMul *= SLOW_MULTIPLIER;

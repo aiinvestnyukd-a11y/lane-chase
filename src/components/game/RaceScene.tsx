@@ -10,11 +10,12 @@ interface RaceSceneProps {
 
 const LANE_WIDTH = 1.7;
 const ROAD_WIDTH = LANE_WIDTH * 4;
-const ROAD_LENGTH_AHEAD = 90;     // how far ahead of camera the road plane reaches
-const ROAD_LENGTH_BEHIND = 20;
+const ROAD_LENGTH_AHEAD = 180;    // long road so it visibly recedes to the horizon
+const ROAD_LENGTH_BEHIND = 25;
 const LANE_MARKER_SPACING = 5;    // distance between dashes
 const DASH_LENGTH = 2.4;
 const DASH_WIDTH = 0.16;
+const ROAD_COLOR = 0x2a2f3a;      // mid-grey, blends with the horizon fog
 
 const laneToX = (lane: number) => (lane - 1.5) * LANE_WIDTH;
 
@@ -43,11 +44,14 @@ export const RaceScene = ({ gameState }: RaceSceneProps) => {
     if (!container) return;
 
     const scene = new THREE.Scene();
+    // Fog tinted to match the road colour — the road's far edge fades into
+    // the haze instead of cutting off, selling depth and sense of distance.
+    scene.fog = new THREE.Fog(ROAD_COLOR, 60, 170);
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(58, 1, 0.5, 200);
-    camera.position.set(0, 3.4, 5.8);
-    camera.lookAt(0, 0.5, -6);
+    const camera = new THREE.PerspectiveCamera(64, 1, 0.5, 220);
+    camera.position.set(0, 3.0, 5.8);
+    camera.lookAt(0, 0.1, -12);
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({
@@ -72,15 +76,25 @@ export const RaceScene = ({ gameState }: RaceSceneProps) => {
     rim.position.set(-4, 5, -6);
     scene.add(rim);
 
-    // Road
+    // Road — fog-aware so the far edge fades naturally.
     const road = new THREE.Mesh(
       new THREE.PlaneGeometry(ROAD_WIDTH, ROAD_LENGTH_AHEAD + ROAD_LENGTH_BEHIND),
-      new THREE.MeshStandardMaterial({ color: 0x1f2937, roughness: 0.95, metalness: 0.0 }),
+      new THREE.MeshStandardMaterial({ color: ROAD_COLOR, roughness: 0.95, metalness: 0.0, fog: true }),
     );
     road.rotation.x = -Math.PI / 2;
     road.position.set(0, 0, -(ROAD_LENGTH_AHEAD - ROAD_LENGTH_BEHIND) / 2);
     road.receiveShadow = true;
     scene.add(road);
+
+    // Shoulder strips (paler grey) outside the road, suggesting the verge.
+    const shoulderMat = new THREE.MeshStandardMaterial({ color: 0x44495a, roughness: 0.95, fog: true });
+    const shoulderL = new THREE.Mesh(new THREE.PlaneGeometry(2.0, ROAD_LENGTH_AHEAD + ROAD_LENGTH_BEHIND), shoulderMat);
+    shoulderL.rotation.x = -Math.PI / 2;
+    shoulderL.position.set(-(ROAD_WIDTH / 2 + 1.0), -0.001, -(ROAD_LENGTH_AHEAD - ROAD_LENGTH_BEHIND) / 2);
+    scene.add(shoulderL);
+    const shoulderR = shoulderL.clone();
+    shoulderR.position.x = ROAD_WIDTH / 2 + 1.0;
+    scene.add(shoulderR);
 
     // Road edges (white side lines)
     const edgeMat = new THREE.MeshBasicMaterial({ color: 0xf3f4f6 });
